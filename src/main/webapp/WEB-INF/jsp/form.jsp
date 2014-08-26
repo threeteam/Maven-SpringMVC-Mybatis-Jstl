@@ -7,6 +7,13 @@
 <title>Insert title here</title>
 </head>
 <body>
-405
+	<form action="csrfAction" method="post">
+		<input type="hidden" name="CSRFToken" value="${csrf}"/>
+		<input type="text" name="param"/>
+		<input type="submit" value="submit"/>
+	</form>
+	<form action="csrfAction" method="post">
+		<input type="submit" value="submit"/>
+	</form>
 </body>
 </html>
