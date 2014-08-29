@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import pobing.dashboard.dao.UserSupport;
 import pobing.dashboard.model.User;
 import pobing.dashboard.util.CSRFTokenManager;
+import pobing.dashboard.util.DoubleSubmitSession;
 
 @Controller
 public class testcontroller extends BaseController {
@@ -32,12 +33,14 @@ public class testcontroller extends BaseController {
 	}
 
 	@RequestMapping(value = "/form")
+	@DoubleSubmitSession(needSaveToken=true)
 	public String Form(Model model,HttpSession session) {
 		model.addAttribute("csrf", CSRFTokenManager.getTokenForSession(session));
 		return "form";
 	}
 
 	@RequestMapping(value = "/csrfAction")
+	@DoubleSubmitSession(needRemoveToken=true)
 	public String FormAction(HttpServletRequest request,HttpSession session) {
 		String param=request.getParameter("param");
 		System.out.println("param:"+param);

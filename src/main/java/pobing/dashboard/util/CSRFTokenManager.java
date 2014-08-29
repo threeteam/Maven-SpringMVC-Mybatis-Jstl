@@ -16,13 +16,7 @@ public final class CSRFTokenManager {
      * The token parameter name
      */
     static final String CSRF_PARAM_NAME = "CSRFToken";
-
-    /**
-     * The location on the session which stores the token
-     */
-    public static final  String CSRF_TOKEN_FOR_SESSION_ATTR_NAME = CSRFTokenManager.class
-            .getName() + ".tokenval";
-
+    
     public static String getTokenForSession(HttpSession session) {
         String token = null;
         
@@ -31,10 +25,10 @@ public final class CSRFTokenManager {
         // init the token concurrently
         synchronized (session) {
             token = (String) session
-                    .getAttribute(CSRF_TOKEN_FOR_SESSION_ATTR_NAME);
+                    .getAttribute(CSRF_PARAM_NAME);
             if (null == token) {
                 token = UUID.randomUUID().toString();
-                session.setAttribute(CSRF_TOKEN_FOR_SESSION_ATTR_NAME, token);
+                session.setAttribute(CSRF_PARAM_NAME, token);
             }
         }
         return token;

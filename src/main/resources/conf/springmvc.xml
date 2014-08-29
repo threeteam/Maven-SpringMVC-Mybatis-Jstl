@@ -24,9 +24,18 @@
 	     </property>
 	 </bean>
     
+    <!-- 拦截器（放攻击（XSS，CSRF）、重复提交） -->
     <mvc:interceptors>
     	<bean class="pobing.dashboard.util.CSRFHandlerInterceptor"></bean>
     </mvc:interceptors>
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
+	   <property name="interceptors">
+	      <list>
+	          <bean class="pobing.dashboard.util.DoubleSubmitSessionInterceptor"/>
+	      </list>
+	   </property>
+	</bean>
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"/> 
 	<!-- 对模型视图添加前后缀 -->
 	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver"
 	 p:prefix="/WEB-INF/jsp/" p:suffix=".jsp"/>

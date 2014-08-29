@@ -8,7 +8,8 @@
 </head>
 <body>
 	<form action="csrfAction" method="post">
-		<input type="hidden" name="CSRFToken" value="${csrf}"/>
+		<input type="hidden" name="CSRFToken" value="${CSRFToken}"/>
+		<input type="hidden" name="SubmitToken" value="${SubmitToken}"/>
 		<input type="text" name="param"/>
 		<input type="submit" value="submit"/>
 	</form>
