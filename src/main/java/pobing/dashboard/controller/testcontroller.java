@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,5 +46,17 @@ public class testcontroller extends BaseController {
 		String param=request.getParameter("param");
 		System.out.println("param:"+param);
 		return "redirect:/index";
+	}
+	
+	
+	@Autowired
+	UserSupport userSupport;
+	
+	
+	@RequestMapping(value="/test")
+	public String GetUser(){
+		User user=userSupport.selectUserByID(1);
+		logger.debug(user.toString());
+		return null;
 	}
 }

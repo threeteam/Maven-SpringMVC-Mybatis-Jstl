@@ -39,4 +39,38 @@
 	<!-- 对模型视图添加前后缀 -->
 	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver"
 	 p:prefix="/WEB-INF/jsp/" p:suffix=".jsp"/>
+	
+	
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations" value="classpath:conf/jdbc.properties" />
+	</bean>	
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close" 
+		p:driverClassName="${jdbc_driverClassName}"
+		p:url="${jdbc_url}" 
+		p:username="${jdbc_username}" 
+		p:password="${jdbc_password}"
+		p:maxActive="10" p:maxIdle="10">
+	</bean>
+	
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	  <property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	 
+  <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"> 
+     <!--dataSource属性指定要用到的连接池--> 
+     <property name="dataSource" ref="dataSource"/> 
+     <!--configLocation属性指定mybatis的核心配置文件--> 
+     <property name="configLocation" value="classpath:conf/spring-mybatis.xml" /> 
+     <!-- 所有配置的mapper文件 -->
+     <property name="mapperLocations" value="classpath*:mapper/*.xml" />
+  </bean> 
+  
+  <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+	 <property name="basePackage" value="pobing.dashboard.dao" />	 
+  </bean>
+  
+  
 </beans>
