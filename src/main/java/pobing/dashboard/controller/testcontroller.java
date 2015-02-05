@@ -11,12 +11,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import pobing.dashboard.dao.UserSupport;
 import pobing.dashboard.model.User;
+import pobing.dashboard.service.UserService;
 import pobing.dashboard.util.CSRFTokenManager;
 import pobing.dashboard.util.DoubleSubmitSession;
 
 @Controller
 public class testcontroller extends BaseController {
 
+	@Autowired
+	UserService userService;
+	
 	@RequestMapping(value = "/index")
 	public String TestController(Model model) {
 		SqlSession session = sqlSessionFactory.openSession();
@@ -49,13 +53,12 @@ public class testcontroller extends BaseController {
 	}
 	
 	
-	@Autowired
-	UserSupport userSupport;
+	
 	
 	
 	@RequestMapping(value="/test")
 	public String GetUser(){
-		User user=userSupport.selectUserByID(1);
+		User user=userService.selectUserByID(1);
 		logger.debug(user.toString());
 		return null;
 	}
